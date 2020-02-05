@@ -1,0 +1,36 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void print(char line[], int size) {
+    for (int i = size; i > 0; i--) {
+        printf("%c", line[i]);
+    }
+}
+
+//-----------------------------------------------------------
+void reverse() {   // pre-C99 -- have to write void if no args
+
+
+    printf("Reverse per Line: ");
+    int c;
+    int count = 0;
+    unsigned char * arr;
+#define USER_SIZE 10
+
+    arr = (char*)malloc ( USER_SIZE * sizeof (char));
+    while ((c = getchar()) != EOF) {
+        arr[count]=c;
+        if(c =='\n'|| c == EOF) {
+            print(arr, count);
+            count=0;
+        }
+        ++count;
+
+    }
+}
+
+int main(int argc, const char *argv[]) {
+    reverse();
+
+    return 0;
+}
