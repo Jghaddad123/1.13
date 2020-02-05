@@ -19,7 +19,7 @@ void linelengthreturn() {   // pre-C99 -- have to write void if no args
     int posfirst = 0;
     int poslast = 0;
     int count = 0;
-    while ((c = tolower(getchar())) != EOF) {
+    while ((c = getchar()) != EOF) {
         count = poslast - posfirst;
         line[count] = c;
         if (c == '\n' || c == EOF) {
