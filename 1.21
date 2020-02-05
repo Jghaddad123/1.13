@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <ctype.h>
+
+void print(char line[], int size) {
+    for (int i = 0; i < size; i++) {
+        printf("%c", line[i]);
+    }
+}
+
+//-----------------------------------------------------------
+void entab() {   // pre-C99 -- have to write void if no args
+    printf("Blanks to tabs: ");
+    int c;
+    int count = 0;
+    while ((c = getchar()) != EOF) {
+        if (c != ' ') {
+            while (count / 8 > 0) {
+                printf("\t");
+                count = count -8;
+            }
+            while (count % 8 > 0) {
+                printf(" ");
+                --count;
+            }
+            printf("%c", c);
+            count = 0;
+        } else if (c == ' ') {
+            ++count;
+
+        }
+
+
+    }
+}
+
+int main(int argc, const char *argv[]) {
+    entab();
+
+    return 0;
+}
