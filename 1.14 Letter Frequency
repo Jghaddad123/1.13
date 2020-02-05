@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+void letterfrequency(void (*f)(int[]) );
+
+void printout() {
+    for (int i = 1; i <= 24; i++) {
+        printf(" %2d: ", i);
+    }
+}
+
+void print_horiz_histogram(int length[]) {
+    for (int j = 0; j < 26; j++) {
+        if ((j) % 4 == 0 && j>0)
+            printf("---------------------------------------------------------------------------------------------------------------------- \n");
+        if (length[j] == 0)
+            printf("  %c:", (j+97));
+
+
+        for (int i = 0; i < length[j]; i++) {
+            if (i == 0) {
+                printf("  %c: ", (j+97));
+            } else if (i % 5 == 0) {
+                printf("|");
+            }
+            printf("*");
+        }
+
+        printf("\n");
+    }
+}
+
+
+//-----------------------------------------------------------
+void letterfrequency(void (*f)(int[]) ) {   // pre-C99 -- have to write void if no args
+    int c;
+    int length[26];
+    for (int i = 0; i < 25; i++) {
+        length[i] = 0;
+    }
+
+    while ((c = tolower(getchar())) != '-') {
+
+        length[(c-97)]++;
+    }
+      (*f)(length);
+}
+
+int main(int argc, const char *argv[]) {
+      letterfrequency(print_horiz_histogram);
+
+    return 0;
+}
