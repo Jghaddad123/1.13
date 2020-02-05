@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <ctype.h>
+
+void print(char line[], int size) {
+    for (int i = 0; i < size; i++) {
+        printf("%c", line[i]);
+    }
+}
+
+//-----------------------------------------------------------
+void linelengthreturn() {   // pre-C99 -- have to write void if no args
+    int c;
+    char line[250];
+
+    for (int i = 0; i < 249; i++) {
+        line[i]=' ';
+    }
+
+    int posfirst = 0;
+    int poslast = 0;
+    int count = 0;
+    while ((c = tolower(getchar())) != EOF) {
+        count = poslast - posfirst;
+        line[count] = c;
+        if (c == '\n' || c == EOF) {
+            if (count > 80) {
+                print(line, sizeof(line));
+            }
+            posfirst = poslast;
+        }
+        ++poslast;
+    }
+}
+
+int main(int argc, const char *argv[]) {
+    linelengthreturn();
+
+    return 0;
+}
