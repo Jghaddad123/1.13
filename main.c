@@ -96,8 +96,8 @@ void find_word_length(void (*f)(int[])) {   // pre-C99 -- have to write void if 
 }
 
 int main(int argc, const char *argv[]) {
-    //  find_word_length(print_horiz_histogram);
-        find_word_length(print_vert_histogram);
+   find_word_length(print_horiz_histogram);
+   find_word_length(print_vert_histogram);
 
 
     return 0;
