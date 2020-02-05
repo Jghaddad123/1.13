@@ -40,7 +40,7 @@ void letterfrequency(void (*f)(int[]) ) {   // pre-C99 -- have to write void if 
         length[i] = 0;
     }
 
-    while ((c = tolower(getchar())) != '-') {
+    while ((c = tolower(getchar())) != EOF) {
 
         length[(c-97)]++;
     }
