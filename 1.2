@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <ctype.h>
+
+void print(char line[], int size) {
+    for (int i = 0; i < size; i++) {
+        printf("%c", line[i]);
+    }
+}
+
+//-----------------------------------------------------------
+void swaptabs() {   // pre-C99 -- have to write void if no args
+
+
+    printf("Removing extra blanks: ");
+    int c;
+    int last;
+    while ((c = getchar()) != EOF) {
+        if(c !='\t'){
+            printf("%c", c);
+        }
+        else
+            printf("        ");
+    }
+}
+
+int main(int argc, const char *argv[]) {
+    swaptabs();
+
+    return 0;
+}
