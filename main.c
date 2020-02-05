@@ -74,7 +74,7 @@ void find_word_length(void (*f)(int[])) {   // pre-C99 -- have to write void if 
     int posfirst = 0;
     int poslast = 0;
     char last = 'a';
-    while ((c = getchar()) != '-') {
+    while ((c = getchar()) != EOF) {
 
         if (((last == ' ') || (last == '\n')) && ((c == '\n') || (c == ' '))) {
             posfirst = poslast;
