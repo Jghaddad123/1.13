@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXLINE 1000
+
+
+void print(char full[], int first, int blank) {
+    for (int i = first; i < blank; i++) {
+        printf("%c", full[i]);
+    }
+    printf("\n");
+}
+
+int findnearestblank(char full[], int index) {
+    for (int i = (79 + index); i > (0 + index); i--) {
+        if (full[i] == ' ')
+            return i;
+    }
+}
+
+void fold(void) {
+    char full[MAXLINE];
+    int c, size = 0, index = 0, current = 0;
+    while ((c = getchar()) != EOF) {
+        full[size++] = c;
+    }
+    //could make this recursive
+    while (current != -1) {
+        if ((size - index) >= 80) {
+            print(full, current, (index = findnearestblank(full, index)));
+            current = index;
+        } else {
+            print(full, current, size);
+            current = -1;
+
+        }
+    }
+}
+
+int main(int argc, const char *argv[]) {
+    fold();
+
+    return 0;
+}
+
