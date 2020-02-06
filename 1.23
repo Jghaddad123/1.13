@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+#define MAXLINE 1000
+
+
+void commentkiller(void) {
+    char full[MAXLINE];
+    bool inquotes = false;
+    int c, current = 0, size = 0;
+
+    while ((c = getchar()) != EOF) {
+        full[size] = c;
+        size++;
+    }
+    while (current != size) {
+        if (full[current] == '"') {
+            if (inquotes == true) {
+                printf("%c", full[current]);
+                current++;
+                inquotes = false;
+            } else if (inquotes == false) {
+                printf("%c", full[current]);
+
+                inquotes = true;
+                current++;
+
+            }
+        } else if ((full[current] == '/') && (full[current + 1] == '/') && inquotes == false) {
+            for (int i = current; i < size; i++) {
+                if (full[i] == '\n')
+                    current = i;
+            }
+        } else if ((full[current] == '/') && (full[current + 1] == '*') && inquotes == false) {
+            for (int i = current; i < size; i++) {
+                if (full[i] == '*' && full[i + 1] == '/')
+                    current = i + 2;
+            }
+        } else {
+            printf("%c", full[current]);
+            current++;
+        }
+    }
+}
+
+int main(int argc, const char *argv[]) {
+    commentkiller();
+
+    return 0;
+}
+
