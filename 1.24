@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+#define MAXLINE 1000
+
+//crued and quicl out of time time 11:58
+void codecheck(void) {
+    char full[MAXLINE];
+    bool inquotes = false;
+    int c, paraopen = 0, paraclose = 0, brackopen=0,brackclose=0,size=0,bracesopen=0,bracesclosed=0,singlequote=0,doublequote=0;
+
+    while ((c = getchar()) != EOF) {
+        if(c == '('){
+            paraopen++;
+        }
+        else if(c == ')'){
+            paraclose++;
+        }
+        else if(c == '['){
+            brackopen++;
+        }
+        else if(c == ']'){
+            brackclose++;
+        }
+        else if(c == '{'){
+            bracesopen++;
+        }
+        else if(c == '}'){
+            bracesclosed++;
+        }
+        else if(c == '\''){
+            singlequote++;
+        }
+        else if(c == '"'){
+            doublequote++;
+        }
+    }
+    if( paraopen!= paraclose){
+        printf("Error Parenthesis \n");
+    }
+    if( brackopen!= brackclose){
+        printf("Error Brackets \n");
+    }
+    if( bracesopen!= bracesclosed){
+        printf("Error Braces \n");
+    }
+    if( singlequote%2!= 0){
+        printf("Error singlequote \n");
+    }
+    if( doublequote%2!= 0){
+        printf("Error doublequote \n");
+    }
+}
+
+int main(int argc, const char *argv[]) {
+    codecheck();
+
+    return 0;
+}
+
