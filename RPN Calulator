@@ -6,6 +6,7 @@
 
 #define NUMBER '0'
 #define MATH '1'
+#define VARIABLE '2'
 
 #define MAXVAL  100
 
@@ -78,8 +79,16 @@ void peek() {
     }
     printf("\n");
 }
+void variable(char* s){
 
-void Math(char *s) {
+     if(*s =='='){
+        val[*(s+1) -'A'] = pop());
+     }
+     else if(*s =='?'){
+         push(val[*(s+1) -'A');
+     }
+}
+ void Math(char *s) {
     double op1, op2, result = 0;
     if (strcmp(s, "pow") == 0) {
         op2 = pop();
@@ -108,7 +117,7 @@ int getop(char *s) {
     if (isalpha(c)) {
         i = 0;
         while (isalpha(s[++i] = c = getch_())){
-            
+
         }
         s[1] = '\0';
         return MATH;
@@ -203,6 +212,9 @@ void rpn() {
                 break;
             case MATH:
                 Math(s);
+                break;
+            case VARIABLE:
+                variable(s);
                 break;
             default:
                 fprintf(stderr, "Unknown Input %s\n", s);
