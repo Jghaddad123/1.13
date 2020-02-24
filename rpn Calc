@@ -1,0 +1,189 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <math.h>
+
+#define NUMBER '0'     
+#define MAXVAL  100
+
+size_t sp = 0;   
+double val[MAXVAL];   
+
+char buf[BUFSIZ];
+size_t bufp = 0;
+
+
+double pop() {
+    if (sp == 0) {
+        fprintf(stderr, "stack underflow\n");
+        return 0.00;
+    }
+    return val[--sp];
+}
+
+void push(double a) {
+    if (sp == MAXVAL) {
+        fprintf(stderr, "stack overflow -- can't push %g\n", f);
+        return;
+    }
+    val[sp++] = a;
+}
+
+void clear() {
+    for (int i = 0; i < MAXVAL; ++i) { val[i] = 0; }
+}
+
+void swap() {
+    double temp = pop();
+    double demp = pop();
+    val[sp] = temp;
+    val[++sp] = demp;
+}
+
+void duplicate() {
+    double temp = val[sp];
+    double demp = val[sp - 1];
+    val[++sp] = demp;
+    val[++sp] = temp;
+}
+
+int getch_() {
+    return (bufp > 0) ? buf[--bufp] : getchar();
+}
+
+void ungetch_(int c) {
+    if (bufp >= BUFSIZ) {
+        fprintf(stderr, "ungetch: too many characters\n");
+        return;
+    }
+    buf[bufp++] = c;
+}
+
+void peekTopTwo() {
+    if (sp == 0) {
+        fprintf(stderr, "Stack underflow\n");
+    } else if (sp == 1) {
+        printf("Top of stack is: {%.7g}\n", val[sp - 1]);
+    } else {
+        printf("Top of stack and below it is: {%.7g, %.7g}\n", val[sp - 1], val[sp - 2]);
+    }
+}
+
+void peek() {
+    for (int i = 0; i < MAXVAL; ++i) {
+        printf("%.8g ", val[i]);
+    }
+    printf("\n");
+}
+
+int getop(char *s) {
+    int i, c;
+    while ((s[0] = c = getch_()) == ' ' || c == '\t') {
+
+    }
+    s[1] = '\0';
+
+    if (!isdigit(c) && c != '.') {
+        return c;
+    }  // if not a digit, return
+
+    i = 0;
+    if (isdigit(c)) {  // get digits before '.'
+        while (isdigit(s[++i] = c = getch_())) {}
+    }
+    if (c == '.') {    // get digits after decimal (if any)
+        while (isdigit(s[++i] = c = getch_())) {}
+    }
+    s[i] = '\0';
+    if (c != EOF) {
+        ungetch_(c);
+    }
+    return NUMBER;      // return type is NUMBER, number stored in s
+}
+
+double dmod(double x, double y) {
+    return x - (int) (x / y) * y;
+}
+
+double dpow(double z, double x) {
+    return pow(x, z);
+}
+
+void rpn() {
+    int type;
+    double op2;
+    char s[BUFSIZ];
+
+    while ((type = getop(s)) != EOF) {
+        switch (type) {
+            case '+':
+                push(pop() + pop());
+                break;
+            case '*':
+                push(pop() * pop());
+                break;
+            case '-':
+                push(-(pop() - pop()));
+                break;
+            case '/':
+                if ((op2 = pop()) == 0.0) {
+                    fprintf(stderr, "Divide by Zero\n");
+                    break;
+                }
+                push(pop() / op2);
+                break;
+
+            case '%':
+                if ((op2 = pop()) == 0.0) {
+                    fprintf(stderr, "Divide by Zero\n");
+                    break;
+                }
+                push(dmod(pop(), op2));
+                break;
+            case '^':
+                push(dpow(pop(), pop()));
+                break;
+            case 'a':
+                peek();
+                break;
+
+            case 's':
+                swap();
+                break;
+            case 'd':
+                duplicate();
+                break;
+
+            case 'c':
+                clear();
+                break;
+            case 'p':
+                peekTopTwo();
+                break;
+
+            case 'e':
+                push(exp(pop()));
+                break;
+            case '$':
+                push(sin(pop()));
+                break;
+
+            case '\n':
+                printf("\t%.7g\n", pop());
+                break;
+            case NUMBER:
+                push(atof(s));
+                break;
+
+            default:
+                fprintf(stderr, "Unknown Input %s\n", s);
+                break;
+        }
+    }
+}
+
+int main(int argc, const char *argv[]) {
+    rpn();
+
+    return 0;
+}
