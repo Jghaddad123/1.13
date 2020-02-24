@@ -23,7 +23,7 @@ double pop() {
 
 void push(double a) {
     if (sp == MAXVAL) {
-        fprintf(stderr, "stack overflow -- can't push %g\n", f);
+        fprintf(stderr, "stack overflow -- can't push %g\n", a);
         return;
     }
     val[sp++] = a;
