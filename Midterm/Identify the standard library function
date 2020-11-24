@@ -1,0 +1,14 @@
+// The C Standard Library: Identify the standard library functions that do the following…
+(3 pts) (2) Find the first character c in a const char* s:  
+char *strchr(s,c);
+
+// (3 pts) (3) Find the length of the prefix of const char* s that has characters in const char* t: 
+size_t strspn(t,s);
+
+// (3 pts) (4) Terminate a program immediately 
+exit(0);
+
+
+// (3 pts) (5) Open the file “midterm.txt” in read mode 
+FILE *fptr;
+fptr = fopen("midterm.txt","r");

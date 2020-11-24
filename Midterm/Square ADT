@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+//------ POINT ----------------------------------------------------------------
+typedef struct point point;
+struct point { double x, y; };
+//------ SQUARE -----------------------------------------------------------------
+typedef struct square square;
+struct square { point ul; size_t side; };
+
+void square_move(square* sq, double x, double y);
+square* square_init(double ulx, double uly, double side);
+
+
+void square_delete(square* sq); // TODO
+void square_expandby(square* sq, double expandby);
+double square_area(square* sq);
+double square_perimeter(square* r);
+// print location, side, area and perimeter
+void square_print(const char* msg, square* sq);
+
+void square_expandby(square* sq, double expandby){
+    sq->side = sq->side+expandby;
+}
+
+
+void square_print(const char* msg, square* sq){
+    msg = 'X: %d Y: %d, Side: %d, Area: %d,Perimeter: %d',sq->ul.x,sq->ul.y,square_area(sq),square_perimeter(sq);
+}
+
+void square_delete(square* sq){
+    free(sq);
+}
+double square_perimeter(square* r){
+    return (r->side*4);
+}
+double square_area(square* sq){
+    return (sq->side*sq->side);
+}
+
+square* square_init(double ulx, double uly, double side){
+    square* sq =(square*)malloc(sizeof(square));
+    sq->ul.x = ulx;
+    sq->ul.y = uly;
+    sq->side = side;
+    return  sq;
+}
+
+void square_move(square* sq, double x, double y){
+    sq->ul.x = x;
+    sq->ul.y = y;
+}
+
+
+
+void test_square(double ulx, double uly, double side) {
+    square* sq = square_init(ulx, uly, side);
+    square_print('sq is: ', sq);
+    square_move(sq,2, 2);
+    square_print('sq is now: ', sq);
+    square_expandby(sq, 10);
+    square_print('sq has expanded to: ', sq);
+    square_delete(sq);
+    printf('\n\n');
+}
+void tests_square() {
+    test_square(0, 0, 10);
+    test_square(1, 1, 5);
+}
+int main(int argc, const char* argv[]) {
+    tests_square();
+    return 0;
+}
